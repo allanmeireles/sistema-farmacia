@@ -1,0 +1,31 @@
+CREATE TABLE cliente(
+	id int auto_increment primary KEY,
+    nome varchar(100) not null,
+    endereco varchar(100) not null,
+    telefone varchar(20) not null
+);
+
+CREATE TABLE medicamento(
+	id int auto_increment primary key,
+    nome varchar(100) not null,
+    preco decimal(10,2) not null,
+    quantidade int not null
+);
+
+CREATE TABLE pedido(
+	id int auto_increment primary key,
+    cliente_id int not null, 
+    total decimal(10,2) not null,
+    pago boolean default false, 
+    foreign key (cliente_id) references cliente(id) on delete cascade
+);
+
+CREATE TABLE pedidoItem(
+	id int auto_increment primary key,
+    pedido_id int not null,
+    medicamento_id int not null,
+    quantidade int not null,
+    foreign key (pedido_id) references pedido(id) on delete cascade,
+    foreign key (medicamento_id) references medicamento(id) on delete cascade
+);
+
