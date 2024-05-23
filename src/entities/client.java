@@ -57,7 +57,7 @@ public class client implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(address, id, name, telephone);
 	}
 
 	@Override
@@ -66,15 +66,11 @@ public class client implements Serializable{
 		if (obj == null) return false;
 		if (getClass() != obj.getClass()) return false;
 		client other = (client) obj;
-		return id == other.id;
+		return Objects.equals(address, other.address) && id == other.id && Objects.equals(name, other.name) && Objects.equals(telephone, other.telephone);
 	}
 
 	@Override
 	public String toString() {
 		return "client [id=" + id + ", name=" + name + ", address=" + address + ", telephone=" + telephone + "]";
 	}
-	
-	
-	
-	
 }
