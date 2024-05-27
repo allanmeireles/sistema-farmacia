@@ -1,19 +1,23 @@
 package application;
 import java.sql.Connection;
+
+import dao.ClientDAO;
+import dao.DaoFactory;
 import db.DB;
 import entities.client;
 import entities.medicine;
+import implement.ClientDaoJDBC;
 
 
 public class Program {
 
 	public static void main(String[] args) {
 		
-		client obj = new client(1,"allan","rua azul","40028922");
+		ClientDAO clientdao = DaoFactory.createClientDAO();
 		
-		medicine medicine = new medicine(1,"dipirona",23,2);
+		String client = clientdao.get(1);
 		
-		System.out.println(medicine);
+		System.out.println(client);
 		
 	}
 }
