@@ -15,9 +15,14 @@ public class Program {
 		
 		ClientDAO clientdao = DaoFactory.createClientDAO();
 		
+		System.out.println("=== TEST 1: getClient===");
 		String client = clientdao.get(1);
 		
 		System.out.println(client);
 		
+		System.out.println("=== TEST 2: INSERT===");
+		client client2 = new client("Júnior Dantas","Rua Laranjeira","12343-321354");
+		clientdao.insert(client2);
+		System.out.println("Inserted! New id = " + client2.getId());
 	}
 }
