@@ -51,26 +51,56 @@ public class ClientDaoJDBC implements ClientDAO {
 			throw new DbException(e.getMessage());
 		}
 		finally {
-			DB.closeConnection();
+			DB.closeStatement(st);
 		}
+		
 		
 		
 	}
 
 	@Override
 	public void update(client obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					"UPDATE cliente " +
+			        "SET nome = ?,endereco = ?,telefone = ? " +
+					"WHERE id = ?");
+			
+			st.setString(1, obj.getName());
+			st.setString(2, obj.getAddress());
+			st.setString(3, obj.getTelephone());
+			st.setInt(4, obj.getId()); 
+			
+			st.executeUpdate(); 
+		}	
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
 	@Override
 	public void deleteByID(int id) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null; 
+		try {
+		st = conn.prepareStatement("DELETE FROM cliente WHERE id = ?");
+		st.setInt(1, id);
+		st.executeUpdate();
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);	
+		}
 	}
 
 	@Override
-	public String get(int id) {
+	public client get(int id) {
 		PreparedStatement st = null;
 		ResultSet rs = null; 
 		try {
@@ -88,12 +118,15 @@ public class ClientDaoJDBC implements ClientDAO {
 				obj.setAddress(rs.getString("endereco"));
 				obj.setTelephone(rs.getString("telefone"));
 				System.out.println("Cliente gerado");
-				return obj.toString(); 
+				return obj; 
 			} 
 			return null; 
 		}
 		catch(SQLException e) {
 			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
 		}
 	}
 

@@ -17,7 +17,6 @@ public class client implements Serializable{
 	}
 	
 	public client(String name, String address, String telephone) {
-		super();
 		this.name = name;
 		this.address = address;
 		this.telephone = telephone;
